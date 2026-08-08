@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>{{ tool }}</h2>
+  <p class="desc">Result (1 Credit use hua)</p>
+  <div class="result">
+    {% if ok %}<div class="ok">✅ Success</div>{% else %}<div class="bad">❌ Failed</div>{% endif %}
+    {% for k, v in lines %}
+      <div><span class="k">{{ k }} :</span><span class="v">{{ v }}</span></div>
+    {% endfor %}
+  </div>
+  <a class="btn ghost" href="/dashboard">← Dashboard</a>
+</div>
+{% endblock %}
