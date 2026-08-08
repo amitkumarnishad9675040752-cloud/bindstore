@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Welcome, {{ u['email'] }}</h2>
+  <p class="desc">
+    Aapka balance: <b style="color:var(--gold)">{{ u['credits'] }} Credit{% if u['credits'] != 1 %}s{% endif %}</b>
+    &nbsp;|&nbsp; 1 Credit = ₹{{ price }}
+  </p>
+  <button class="btn gold" onclick="openPay()">+ Buy Credits (₹{{ price }})</button>
+</div>
+
+<div class="grid">
+  <div class="tool">
+    <div class="num">TOOL 1</div>
+    <h3>Bound Gmail Checker</h3>
+    <p class="info">Access Token daalein — bound Gmail aur bind status turant screen par milega.</p>
+    <span class="cost">💎 1 Credit</span>
+    <form method="POST" action="/tool/check">
+      <label>Access Token</label>
+      <input type="text" name="access_token" required>
+      <button class="btn" type="submit">Check Now</button>
+    </form>
+  </div>
+
+  <div class="tool">
+    <div class="num">TOOL 2</div>
+    <h3>Double Unsubscribe OTP Sender</h3>
+    <p class="info">Access Token + woh Gmail ID daalein jis par OTP bhejna hai — OTP usi email par jayega.</p>
+    <span class="cost">💎 1 Credit</span>
+    <form method="POST" action="/tool/otp">
+      <label>Access Token</label>
+      <input type="text" name="access_token" required>
+      <label>Gmail ID (jis par OTP jayegi)</label>
+      <input type="email" name="gmail" required>
+      <button class="btn" type="submit">Send OTP</button>
+    </form>
+  </div>
+
+  <div class="tool">
+    <div class="num">TOOL 3</div>
+    <h3>Check Security Code</h3>
+    <p class="info">Access Token daalein — har baar naya random 6-digit Security Code milega.</p>
+    <span class="cost">💎 1 Credit</span>
+    <form method="POST" action="/tool/sec">
+      <label>Access Token</label>
+      <input type="text" name="access_token" required>
+      <button class="btn" type="submit">Check Code</button>
+    </form>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal" id="pay-modal">
+  <div class="modal-box">
+    <h3>Buy Credits</h3>
+    <div class="amt">₹{{ price }} = 1 Credit</div>
+    <img src="{{ qr_url }}" alt="UPI QR">
+    <p class="desc" style="margin-top:8px">QR scan na ho to neeche UPI ID copy karke pay karein:</p>
+    <div class="upi-row">
+      <code id="upi-id">{{ upi_id }}</code>
+      <button class="btn ghost small" type="button" onclick="copyUpi()">Copy</button>
+    </div>
+    <p class="desc">Payment ke baad UPI Transaction ID (UTR) neeche daalein — admin verify karke credit add karega.</p>
+    <form method="POST" action="/buy">
+      <input type="text" name="utr" placeholder="UPI Transaction ID / UTR" required>
+      <button class="btn gold" type="submit">Maine Payment Kar Di ✅</button>
+    </form>
+    <br>
+    <button class="btn ghost" onclick="closePay()">Close</button>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+function openPay(){ document.getElementById('pay-modal').classList.add('show'); }
+function closePay(){ document.getElementById('pay-modal').classList.remove('show'); }
+{% if buy %}window.addEventListener('DOMContentLoaded', openPay);{% endif %}
+</script>
+{% endblock %}
