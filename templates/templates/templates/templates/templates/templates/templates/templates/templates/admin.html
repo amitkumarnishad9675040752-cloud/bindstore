@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+  <h2>Admin Panel</h2>
+  <p class="desc">Payments approve karein ya users ko credit add/remove karein.</p>
+  <a class="btn ghost small" href="/admin/logout">Logout</a>
+</div>
+
+<div class="card">
+  <h2>Pending Payments (verify karein)</h2>
+  {% set pend = payments | selectattr('status', 'equalto', 'pending') | list %}
+  {% if pend %}
+    {% for p in pend %}
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <div style="flex:1">
+          <b>#{{ p['id'] }}</b> — {{ p['email'] }}<br>
+          <span style="color:var(--dim);font-size:12px">UTR: {{ p['utr'] }} | ₹{{ p['amount'] }} | {{ p['created_at'] }}</span>
+        </div>
+        <form method="POST">
+          <input type="hidden" name="action" value="approve">
+          <input type="hidden" name="pid" value="{{ p['id'] }}">
+          <button class="btn small" type="submit">Approve ✓</button>
+        </form>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="desc">Koi pending payment nahi hai.</p>
+  {% endif %}
+</div>
+
+<div class="card">
+  <h2>Users ({{ users|length }})</h2>
+  <div style="overflow:auto">
+  <table>
+    <tr><th>ID</th><th>Email</th><th>Credits</th><th>Joined</th></tr>
+    {% for u in users %}
+    <tr>
+      <td>{{ u['id'] }}</td>
+      <td>{{ u['email'] }}</td>
+      <td style="color:var(--gold);font-weight:700">{{ u['credits'] }}</td>
+      <td style="color:var(--dim)">{{ u['created_at'] }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Add / Remove Credits</h2>
+  <form method="POST" style="display:flex;gap:10px;flex-wrap:wrap;align-items:end">
+    <div style="flex:1;min-width:180px">
+      <label>User Email</label>
+      <input type="email" name="email" required>
+    </div>
+    <div style="width:110px">
+      <label>Credits</label>
+      <input type="number" name="n" min="1" required>
+    </div>
+    <div style="width:130px">
+      <label>Action</label>
+      <select name="mode">
+        <option value="add">Add</option>
+        <option value="remove">Remove</option>
+      </select>
+    </div>
+    <input type="hidden" name="action" value="credit">
+    <button class="btn small" type="submit">Apply</button>
+  </form>
+</div>
+{% endblock %}
