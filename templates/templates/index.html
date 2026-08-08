@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="text-align:center;padding:34px 20px">
+  <h2 style="font-size:26px">⚡ {{ brand }}</h2>
+  <p class="desc">Garena Bind Service — saare tools ek hi jagah. Login karke credits kharidein aur tools use karein.</p>
+  <div style="margin-top:14px">
+    <a class="btn" style="display:inline-block;width:auto;padding:12px 30px;margin-right:10px" href="/signup">Sign Up Free</a>
+    <a class="btn ghost" style="display:inline-block;width:auto;padding:12px 30px" href="/login">Login</a>
+  </div>
+</div>
+<div class="grid">
+  <div class="tool">
+    <div class="num">TOOL 1</div>
+    <h3>Bound Gmail Checker</h3>
+    <p class="info">Access Token se bound Gmail aur bind status check karein.</p>
+    <span class="cost">💎 1 Credit = ₹{{ price }}</span>
+  </div>
+  <div class="tool">
+    <div class="num">TOOL 2</div>
+    <h3>Double Unsubscribe OTP Sender</h3>
+    <p class="info">Kisi bhi Gmail par OTP bhejein — bas token aur Gmail ID chahiye.</p>
+    <span class="cost">💎 1 Credit = ₹{{ price }}</span>
+  </div>
+  <div class="tool">
+    <div class="num">TOOL 3</div>
+    <h3>Check Security Code</h3>
+    <p class="info">Har baar naya random 6-digit Security Code — 1 credit par.</p>
+    <span class="cost">💎 1 Credit = ₹{{ price }}</span>
+  </div>
+</div>
+{% endblock %}
