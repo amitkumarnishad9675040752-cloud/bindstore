@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width:420px;margin:0 auto">
+  <h2>Admin Login</h2>
+  <p class="desc">Admin password daalein (app.py me ADMIN_PASSWORD change hota hai)</p>
+  <form method="POST">
+    <label>Admin Password</label>
+    <input type="password" name="password" required>
+    <button class="btn" type="submit">Login</button>
+  </form>
+</div>
+{% endblock %}
